@@ -18,21 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$InvoiceListEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvoiceOrderState order) updatedOrder,
+    required TResult Function(InvoiceOrder order) updatedOrder,
     required TResult Function() resetFilters,
     required TResult Function() getInvoicesClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvoiceOrderState order)? updatedOrder,
+    TResult? Function(InvoiceOrder order)? updatedOrder,
     TResult? Function()? resetFilters,
     TResult? Function()? getInvoicesClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvoiceOrderState order)? updatedOrder,
+    TResult Function(InvoiceOrder order)? updatedOrder,
     TResult Function()? resetFilters,
     TResult Function()? getInvoicesClicked,
     required TResult orElse(),
@@ -86,9 +86,9 @@ abstract class _$$_UpdatedOrderCopyWith<$Res> {
           _$_UpdatedOrder value, $Res Function(_$_UpdatedOrder) then) =
       __$$_UpdatedOrderCopyWithImpl<$Res>;
   @useResult
-  $Res call({InvoiceOrderState order});
+  $Res call({InvoiceOrder order});
 
-  $InvoiceOrderStateCopyWith<$Res> get order;
+  $InvoiceOrderCopyWith<$Res> get order;
 }
 
 /// @nodoc
@@ -108,14 +108,14 @@ class __$$_UpdatedOrderCopyWithImpl<$Res>
       null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
-              as InvoiceOrderState,
+              as InvoiceOrder,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $InvoiceOrderStateCopyWith<$Res> get order {
-    return $InvoiceOrderStateCopyWith<$Res>(_value.order, (value) {
+  $InvoiceOrderCopyWith<$Res> get order {
+    return $InvoiceOrderCopyWith<$Res>(_value.order, (value) {
       return _then(_value.copyWith(order: value));
     });
   }
@@ -127,7 +127,7 @@ class _$_UpdatedOrder implements _UpdatedOrder {
   const _$_UpdatedOrder(this.order);
 
   @override
-  final InvoiceOrderState order;
+  final InvoiceOrder order;
 
   @override
   String toString() {
@@ -154,7 +154,7 @@ class _$_UpdatedOrder implements _UpdatedOrder {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvoiceOrderState order) updatedOrder,
+    required TResult Function(InvoiceOrder order) updatedOrder,
     required TResult Function() resetFilters,
     required TResult Function() getInvoicesClicked,
   }) {
@@ -164,7 +164,7 @@ class _$_UpdatedOrder implements _UpdatedOrder {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvoiceOrderState order)? updatedOrder,
+    TResult? Function(InvoiceOrder order)? updatedOrder,
     TResult? Function()? resetFilters,
     TResult? Function()? getInvoicesClicked,
   }) {
@@ -174,7 +174,7 @@ class _$_UpdatedOrder implements _UpdatedOrder {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvoiceOrderState order)? updatedOrder,
+    TResult Function(InvoiceOrder order)? updatedOrder,
     TResult Function()? resetFilters,
     TResult Function()? getInvoicesClicked,
     required TResult orElse(),
@@ -221,9 +221,9 @@ class _$_UpdatedOrder implements _UpdatedOrder {
 }
 
 abstract class _UpdatedOrder implements InvoiceListEvent {
-  const factory _UpdatedOrder(final InvoiceOrderState order) = _$_UpdatedOrder;
+  const factory _UpdatedOrder(final InvoiceOrder order) = _$_UpdatedOrder;
 
-  InvoiceOrderState get order;
+  InvoiceOrder get order;
   @JsonKey(ignore: true)
   _$$_UpdatedOrderCopyWith<_$_UpdatedOrder> get copyWith =>
       throw _privateConstructorUsedError;
@@ -267,7 +267,7 @@ class _$_ResetedFilters implements _ResetedFilters {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvoiceOrderState order) updatedOrder,
+    required TResult Function(InvoiceOrder order) updatedOrder,
     required TResult Function() resetFilters,
     required TResult Function() getInvoicesClicked,
   }) {
@@ -277,7 +277,7 @@ class _$_ResetedFilters implements _ResetedFilters {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvoiceOrderState order)? updatedOrder,
+    TResult? Function(InvoiceOrder order)? updatedOrder,
     TResult? Function()? resetFilters,
     TResult? Function()? getInvoicesClicked,
   }) {
@@ -287,7 +287,7 @@ class _$_ResetedFilters implements _ResetedFilters {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvoiceOrderState order)? updatedOrder,
+    TResult Function(InvoiceOrder order)? updatedOrder,
     TResult Function()? resetFilters,
     TResult Function()? getInvoicesClicked,
     required TResult orElse(),
@@ -375,7 +375,7 @@ class _$_GetInvoicesClicked implements _GetInvoicesClicked {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(InvoiceOrderState order) updatedOrder,
+    required TResult Function(InvoiceOrder order) updatedOrder,
     required TResult Function() resetFilters,
     required TResult Function() getInvoicesClicked,
   }) {
@@ -385,7 +385,7 @@ class _$_GetInvoicesClicked implements _GetInvoicesClicked {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(InvoiceOrderState order)? updatedOrder,
+    TResult? Function(InvoiceOrder order)? updatedOrder,
     TResult? Function()? resetFilters,
     TResult? Function()? getInvoicesClicked,
   }) {
@@ -395,7 +395,7 @@ class _$_GetInvoicesClicked implements _GetInvoicesClicked {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(InvoiceOrderState order)? updatedOrder,
+    TResult Function(InvoiceOrder order)? updatedOrder,
     TResult Function()? resetFilters,
     TResult Function()? getInvoicesClicked,
     required TResult orElse(),

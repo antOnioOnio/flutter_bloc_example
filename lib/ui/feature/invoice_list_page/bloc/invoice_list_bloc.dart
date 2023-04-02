@@ -4,7 +4,7 @@ import 'package:flutter_bloc_freezed_example/repositories/mock_repository.dart';
 import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/bloc/invoice_list_event.dart';
 import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/bloc/invoice_list_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_freezed_example/ui/model/invoice_order_state.dart';
+import 'package:flutter_bloc_freezed_example/ui/model/invoice_order.dart';
 import 'package:flutter_bloc_freezed_example/ui/model/screen_status.dart';
 
 class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
@@ -45,7 +45,7 @@ class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
   FutureOr<void> _onUpdatedOrder(
     InvoiceListEvent event,
     Emitter<InvoiceListState> emit,
-    InvoiceOrderState invoiceOrderState,
+    InvoiceOrder invoiceOrderState,
   ) async {
     emit(
       state.copyWith(
@@ -54,7 +54,7 @@ class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
     );
 
     final invoiceList =
-        await _repository.getSortedInvoices(invoiceOrderState.getSelected());
+        await _repository.getSortedInvoices(invoiceOrderState);
 
     emit(
       state.copyWith(

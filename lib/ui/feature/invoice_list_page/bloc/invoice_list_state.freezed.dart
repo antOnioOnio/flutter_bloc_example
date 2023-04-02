@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$InvoiceListState {
-  InvoiceOrderState get invoicesOrderState =>
-      throw _privateConstructorUsedError;
+  InvoiceOrder get invoicesOrderState => throw _privateConstructorUsedError;
+
   List<Invoice> get invoiceList => throw _privateConstructorUsedError;
+
   ScreenStatus get screenStatus => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,13 +32,15 @@ abstract class $InvoiceListStateCopyWith<$Res> {
   factory $InvoiceListStateCopyWith(
           InvoiceListState value, $Res Function(InvoiceListState) then) =
       _$InvoiceListStateCopyWithImpl<$Res, InvoiceListState>;
+
   @useResult
   $Res call(
-      {InvoiceOrderState invoicesOrderState,
+      {InvoiceOrder invoicesOrderState,
       List<Invoice> invoiceList,
       ScreenStatus screenStatus});
 
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState;
+  $InvoiceOrderCopyWith<$Res> get invoicesOrderState;
+
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
 
@@ -48,6 +51,7 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -62,7 +66,7 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
       invoicesOrderState: null == invoicesOrderState
           ? _value.invoicesOrderState
           : invoicesOrderState // ignore: cast_nullable_to_non_nullable
-              as InvoiceOrderState,
+              as InvoiceOrder,
       invoiceList: null == invoiceList
           ? _value.invoiceList
           : invoiceList // ignore: cast_nullable_to_non_nullable
@@ -76,8 +80,8 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
 
   @override
   @pragma('vm:prefer-inline')
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState {
-    return $InvoiceOrderStateCopyWith<$Res>(_value.invoicesOrderState, (value) {
+  $InvoiceOrderCopyWith<$Res> get invoicesOrderState {
+    return $InvoiceOrderCopyWith<$Res>(_value.invoicesOrderState, (value) {
       return _then(_value.copyWith(invoicesOrderState: value) as $Val);
     });
   }
@@ -97,15 +101,17 @@ abstract class _$$_InvoiceListStateCopyWith<$Res>
   factory _$$_InvoiceListStateCopyWith(
           _$_InvoiceListState value, $Res Function(_$_InvoiceListState) then) =
       __$$_InvoiceListStateCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
-      {InvoiceOrderState invoicesOrderState,
+      {InvoiceOrder invoicesOrderState,
       List<Invoice> invoiceList,
       ScreenStatus screenStatus});
 
   @override
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState;
+  $InvoiceOrderCopyWith<$Res> get invoicesOrderState;
+
   @override
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
@@ -129,7 +135,7 @@ class __$$_InvoiceListStateCopyWithImpl<$Res>
       invoicesOrderState: null == invoicesOrderState
           ? _value.invoicesOrderState
           : invoicesOrderState // ignore: cast_nullable_to_non_nullable
-              as InvoiceOrderState,
+              as InvoiceOrder,
       invoiceList: null == invoiceList
           ? _value._invoiceList
           : invoiceList // ignore: cast_nullable_to_non_nullable
@@ -152,8 +158,9 @@ class _$_InvoiceListState implements _InvoiceListState {
       : _invoiceList = invoiceList;
 
   @override
-  final InvoiceOrderState invoicesOrderState;
+  final InvoiceOrder invoicesOrderState;
   final List<Invoice> _invoiceList;
+
   @override
   List<Invoice> get invoiceList {
     if (_invoiceList is EqualUnmodifiableListView) return _invoiceList;
@@ -195,16 +202,19 @@ class _$_InvoiceListState implements _InvoiceListState {
 
 abstract class _InvoiceListState implements InvoiceListState {
   const factory _InvoiceListState(
-      {required final InvoiceOrderState invoicesOrderState,
+      {required final InvoiceOrder invoicesOrderState,
       required final List<Invoice> invoiceList,
       required final ScreenStatus screenStatus}) = _$_InvoiceListState;
 
   @override
-  InvoiceOrderState get invoicesOrderState;
+  InvoiceOrder get invoicesOrderState;
+
   @override
   List<Invoice> get invoiceList;
+
   @override
   ScreenStatus get screenStatus;
+
   @override
   @JsonKey(ignore: true)
   _$$_InvoiceListStateCopyWith<_$_InvoiceListState> get copyWith =>

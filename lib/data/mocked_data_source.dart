@@ -1,7 +1,5 @@
-
 import 'package:flutter_bloc_freezed_example/repositories/model/invoice.dart';
 import 'package:flutter_bloc_freezed_example/repositories/model/invoice_status.dart';
-import 'package:flutter_bloc_freezed_example/ui/model/filter_order.dart';
 import 'package:flutter_bloc_freezed_example/ui/model/invoice_order.dart';
 
 class MockedDataSource {
@@ -17,24 +15,13 @@ class MockedDataSource {
 
   List<Invoice> sortInvoices(InvoiceOrder invoiceOrder) {
     List<Invoice> invoices = mockedInvoices();
-    final fieldName = invoiceOrder.name;
-    invoices.sort((a, b) {
-      if (fieldName == 'Number') {
-        return invoiceOrder.filterOrder.isAsc()
-            ? a.number.compareTo(b.number)
-            : b.number.compareTo(a.number);
-      } else if (fieldName == 'Amount') {
-        return invoiceOrder.filterOrder.isAsc()
-            ? a.amount.compareTo(b.amount)
-            : b.amount.compareTo(a.amount);
-      } else if (fieldName == 'Date') {
-        return invoiceOrder.filterOrder.isAsc()
-            ? a.registryDate.compareTo(b.registryDate)
-            : b.registryDate.compareTo(a.registryDate);
-      } else {
-        throw Exception('Uknown field: $fieldName.');
-      }
-    });
+
+    invoices.sort(
+      (a, b) => invoiceOrder.when(
+        date: () => a.registryDate.compareTo(b.registryDate),
+        number: () => a.number.compareTo(b.number),
+      ),
+    );
 
     return invoices;
   }
