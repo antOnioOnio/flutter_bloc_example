@@ -103,103 +103,101 @@ And our file with our methods will magically show up and will be accessible.
 
 # State management with Freezed + bloc.
 
-Alright, it’s time to start with our project. In this small example we are going to suppose that we are building an application with which we can filter invoices. We are going to be able to do it by date, number and quantity. We are also going to be able to change the order, ascending or descending. A dummy implementation could be as follows:
+Ok, let’s build our small project. There will be two version of the same project, the first one will be simpler and we will complicate it a bit with the second one. 
 
-![Untitled](readme_images/Untitled.png)
+Let’s imagine that we are building an application with which we can filter invoices, for the first one and for the sake of simplicity, we can sort them by date and number. That’s it, I know I know it’s too easy..but for this one we are going to focus just in how bloc works. We will have time later to complicate our lives.  A dummy UI implementation would. be something like this:
 
-![Untitled](readme_images/Untitled%201.png)
+![Untitled](readme/Untitled.png)
+
+![Untitled](readme/Untitled%201.png)
 
 But before grabbing the building tools, why don’t we go back and review how blocs works and what we really need?
 
 ### How does bloc work?
 
-The Bloc pattern is used to separate business logic from the user interface. It consists of three main elements:
+The Bloc pattern is used to separate business logic from the user interface. It consists of the following main parts:
 
-**The state** (**`State`**). Class that represents the state of our UI.
+**The state** (**`State`**) . Represents the current state of the application. In the Flutter Bloc pattern, the State is usually defined as an immutable class. It contains all the data needed to render the UI for a given screen or widget. When the State changes, the UI is rebuilt to reflect the new state. The State class should be designed to be as simple and efficient as possible, to ensure that the UI can be updated quickly and smoothly.
 
-**The event** (**`Event`**). Class where we will put the possible events launched that can change our state.
+**The event** (**`Event`**). Represents an action or input that triggers a change in the application state. In the Flutter Bloc pattern, the Event is also usually defined as an immutable class. Events are sent to the Bloc, which processes them and updates the State accordingly. Events can be triggered by user interactions, such as button presses or text input, or by external factors, such as changes in data from a server
 
-**The bloc** (**`Bloc`**). Class that maps the events launched to a new state.
+**The bloc** (**`Bloc`**).  Responsible for managing the State of the application in response to Events. It receives Events and processes them to update the State, which is then sent to the UI to be rendered. The Bloc is usually a generic class that takes an Event and a State as its type parameters. It contains the business logic that processes Events and updates the State. The Bloc should be designed to be as modular as possible, with each Bloc responsible for a specific feature or functionality of the application.
 
-Okay. We're not going to go into a lot of detail right now about how to build, provide or listen to the bloc state from the UI because an example will be shown later. Just bear with me now and let’s go step by step and let’s start with the state class
+**The UI** (**`Widget`**). The UI is the part of the application that the user interacts with. It displays the current State of the application and responds to user input by sending Events to the Bloc. In the Flutter Bloc pattern, the UI is usually implemented using Flutter widgets. Widgets can be designed to be stateful or stateless, depending on whether they need to hold onto any internal state. Stateless widgets are recommended whenever possible, as they are simpler and more efficient.
 
 ## State Class
 
 Alright, So, what do we need in our state? Keep in mind that there are a lot of ways of doing the exact same thing, and every developer is going to tell you that his way is the better. So, let’s just do it shall we?
 
-The first thing we need to think about is the filter, we are going to need a class that holds the state of our filters. A possible implementation could be something like this:
+The first thing we need to think about is the filter, we are going to need a class that holds the state of our sort filters. In this first approach we need to differentiate between date and number and just one of them can be used at the same time. So a perfect solution would be a sealed class:
 
 ```dart
 @freezed
 class InvoiceOrder with _$InvoiceOrder {
-  /// Creates a new instance of [InvoiceOrder] with the specified parameters.
-  const factory InvoiceOrder(
-      {required FilterOrder filterOrder,
-      required bool selected,
-      required String name}) = _InvoiceOrder;
+  const factory InvoiceOrder.date() = _Date;
+
+  const factory InvoiceOrder.number() = _Number;
 }
 ```
 
-If you're as clever as a fox, you're probably wondering right now. Hey, what's FilterOrder? Excellent question my dear reader. Our order can be ascending or descending...then, another perfect solution would be..yep, you guessed it ! Sealed class!!
-
-```dart
-@freezed
-class FilterOrder with _$FilterOrder {
-/// Represents an ascendant order
-const factory FilterOrder.orderAsc() = _OrderAsc;
-
-/// Represents an descendant order
-const factory FilterOrder.orderDesc() = _OrderDesc;
-}
-```
-
-Ok, we have covered already the sort filters but we are missing to key componentes in the state, our list of invoices and also we are going to add some flavour to the business, we are going to assume that every time we change the filter, an API request is done. So, we need to represent when the screen is loading for changes, therefore we need a class that represent this status. One possible implementation could be:
+Ok, we have covered already the sort filters but we are missing two key componentes in the state, our list of invoices to be displayed  and also we are going to add some flavour to the business, we are going to assume that every time we change the filter, an API request is done. So, we need to represent when the screen is loading for changes, therefore we need a class that represent this status. One possible implementation for this class could be:
 
 ```dart
 @freezed
 class ScreenStatus with _$ScreenStatus {
 
-	const factory ScreenStatus.initial() = _Initial;
+/// Creates a new instance of [ScreenStatus] with an initial value of [_Initial].
+const factory ScreenStatus.initial() = _Initial;
 
-  const factory ScreenStatus.loading() = _Loading;
+/// Creates a new instance of [ScreenStatus] representing a loading state.
+const factory ScreenStatus.loading() = _Loading;
 
-  const factory ScreenStatus.success() = _Success;
+/// Creates a new instance of [ScreenStatus] representing a success state.
+const factory ScreenStatus.success() = _Success;
 
-  const factory ScreenStatus.error() = _Error; // We could add here the error class as parameter if we wanted. We don't right now. 
+/// Creates a new instance of [ScreenStatus] representing an error state.
+const factory ScreenStatus.error() = _Error;
+}
 
+/// An extension providing additional methods for [ScreenStatus].
+extension ScreenStatusExtension on ScreenStatus {
+
+/// Returns `true` if the [ScreenStatus] is in the loading state; otherwise, returns `false`.
+bool isLoading() => maybeWhen(orElse: () => false, loading: () => true);
 }
 ```
-
-Ok. We already have everything we need to set up our state class:
-
-- Invoice class that holds every data that our invoice will have.
-- Our class that represents the order in which they will be displayed.
-- Our class that represents the state of the screen
-
-### 
-
-### State class
 
 Recap, we already know the elements our state class needs to have, let's set it up. One possible implementation would be:
 
 ```dart
 @freezed
-class InvoiceFilterState with _$InvoiceFilterState {
-  const factory InvoiceFilterState({
-    required InvoiceDataFilter invoiceDataFilter,
-    required ScreenStatus screenStatus,
-		required List<Invoices> invoicesList, 
-  }) = _FilterState;
+class InvoiceListState with _$InvoiceListState {
+  const factory InvoiceListState(
+      {required InvoiceOrder invoicesOrderState,
+      required List<Invoice> invoiceList,
+      required ScreenStatus screenStatus}) = _InvoiceListState;
 
-  factory InvoiceFilterState.initial() {
-    return InvoiceFilterState(
-      invoiceDataFilter: InvoiceDataFilter.date(FilterOrder.orderAsc()),
+/// Initial state of the state 
+  factory InvoiceListState.initial() {
+    return const InvoiceListState(
+      invoicesOrderState: InvoiceOrder.date(),
+      invoiceList: [],
       screenStatus: ScreenStatus.initial(),
-			invoicesList: [], 
     );
   }
 }
+
 ```
+
+So, state class completed!! So far we have 1 of the 3 necessary classes.
+
+The event (**`Event`**).  ✅
+
+The state (**`State`**).   🚨
+
+The bloc (**`Bloc`**). 🚨
+
+Let’s jump into the next one.
 
 ### Event class
 
@@ -216,7 +214,7 @@ const factory InvoiceFilterEvent.resetAllFilters() = _ResetAllFilters;
 }
 ```
 
-So far we have 2 of the 3 necessary classes.
+And that’s it!, quick this one uh! Second step completed.
 
 The event (**`Event`**).  ✅
 
@@ -226,79 +224,46 @@ The bloc (**`Bloc`**). 🚨
 
 ### Bloc class
 
-To give it a little more flavor and add some asynchrony, let's assume that when we set our filter through the filter buttons, we call an external service through a repository, which will give us an asynchronous response with a list of invoices. 
+To give it a little more flavour and add some asynchrony, let's assume that when we set our filter through the filter buttons, we call an external service through a repository, which will give us an asynchronous response with a list of invoices. 
 
 The repository will be given by parameter in the creation of the bloc, which is not the subject of our study today.  A possible implementation of this class could be:
 
 ```dart
-class InvoiceFilterBloc extends Bloc<InvoiceFilterEvent, InvoiceFilterState> {
-	final RepositoryContract _repository;	
+class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
+  final MockRepository _repository;
 
-// We set the initial state to InvoiceFilterState.initial() where we set everything to an initial status. 
-  InvoiceFilterBloc({
-		required FaceRepositoryContract repository,
-	}) : _repository = repository, 
-		
-	super(InvoiceFilterState.initial()) {
-		
-    on<InvoiceFilterEvent>(
+  InvoiceListBloc({required repository})
+      : _repository = repository,
+        super(InvoiceListState.initial()) {
+    on<InvoiceListEvent>(
       (event, emit) async {
-
-        await event.when(  // This .when force us to map every possible event
-
-         updateInvoiceDataFilter: (invoiceDataFilter) async {
-            await _onupdateInvoiceDataFilter(event, emit, invoiceDataFilter);
-          },
-
-					//For simplicity, we show the example like this without calling any service here.
-					//Depenging on our logic we could clear the invoices too. 
-	        resetAllFilters: () {
-            emit(
-              state.copyWith(
-	               invoiceDataFilter: InvoiceDataFilter.date(FilterOrder.orderAsc()),
-              ),
-            );
-          },
-        );
+        await event.when(
+            updatedOrder: (invoiceOrderState) async => await _onUpdatedOrder(event, emit, invoiceOrderState),
+            resetFilters: () { emit(InvoiceListState.initial());},
+         
       },
     );
   }
 
-	FutureOr<void> _onupdateInvoiceDataFilter(
-	    InvoiceFilterEvent event,
-	    Emitter<InvoiceFilterState> emit,
-	    InvoiceDataFilter invoiceDataFilter,
-	  ) async {
+FutureOr<void> _onUpdatedOrder(
+    InvoiceListEvent event,
+    Emitter<InvoiceListState> emit,
+    InvoiceOrder invoiceOrderState,
+  ) async {
+    emit(
+      state.copyWith(
+          screenStatus: const ScreenStatus.loading(),
+          invoicesOrderState: invoiceOrderState),
+    );
 
-	    emit(
-	      state.copyWith(
-	        screenStatus: const ScreenStatus.loading(),
-	      ),
-	    );
+    final invoiceList = await _repository.getSortedInvoices(invoiceOrderState);
 
-			//Fake call.
-			final result = await _repository.getFilteredInvoices(invoiceDataFilter);
-
-			result.when(
-		      failure: (failure) {
-		        emit(
-		          state.copyWith(
-		            screenStatus: const ScreenStatus.error(),
-		          ),
-		        );
-		      },
-		      success: (invoices) {
-		        emit(
-		          state.copyWith(
-		            screenStatus: const ScreenStatus.success(),
-								invoicesList: invoices
-		          ),
-		        );
-		      },
-		    );
-	  }
+    emit(
+      state.copyWith(
+          screenStatus: const ScreenStatus.success(), invoiceList: invoiceList),
+    );
+  }
 }
-
 ```
 
 And that's it. Our bloc is complete.
@@ -324,49 +289,237 @@ To use bloc from the UI, we can create a `BlocProvider` and a `BlocBuilder`. The
 One possible use could be the following. Imagine that when the invoices are filtered you want to show the list of invoices, when it is loading a loading widget, and when it is not, simply the filters menu. One possible implementation would be:
 
 ```dart
-class CreateIncidenceContactMessageHandler extends StatelessWidget {
-  const CreateIncidenceContactMessageHandler({Key? key}) : super(key: key);
+class InvoiceListPage extends StatelessWidget {
+  const InvoiceListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
-      create: (context) => InvoiceFilterBloc(repository: GetIt.I<RepositoryContract>()), // Creation of the bloc
-      child: BlocBuilder<InvoiceFilterBloc, InvoiceFilterState>( // Consuming the bloc
-        builder: (context, state) {
-          return state.screenStatus.when(
-            initial: () => FilterInvoicesPage(),
-            loading: () => LoadingWidget(),
-            success: () => InvoicesList(invoices: state.invoicesList),
-            error: () => ErrorWidget(),
-          );
-        },
-      ),
+      create: (BuildContext context) =>
+          InvoiceListBloc(repository: MockRepository()),
+      child: BlocBuilder<InvoiceListBloc, InvoiceListState>(
+          builder: (context, state) {
+        final bloc = context.read<InvoiceListBloc>();
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Invoice list'),
+          ),
+          body: state.screenStatus.when(
+            initial: () => const InvoiceListSection(),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            success: () => const InvoiceListSection(),
+            error: () => const SizedBox(),
+          ),
+        );
+      }),
     );
   }
 }
 
-// Just an example..
 ```
 
-### Example of launching an event from a widget.
+In our case the page is divided in two, the row sort buttons and the list of invoices
+
+![Untitled](readme/Untitled.png)
+
+```dart
+class InvoiceListSection extends StatelessWidget {
+  const InvoiceListSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<InvoiceListBloc, InvoiceListState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+							///
+              /// =====> Row buttons
+              ///
+							SortChipsRow(
+                  state: state.invoicesOrderState,
+                  onChipSelected: (invoiceOrderState) {
+                    context
+                        .read<InvoiceListBloc>()
+                        .add(InvoiceListEvent.updatedOrder(invoiceOrderState));
+                  }),
+							///
+              /// =====> Invoice List Section
+              ///
+							Expanded(
+                child: ListView.builder(
+                  itemCount: state.invoiceList.length,
+                  itemBuilder: (context, index) {
+                    return InvoiceCard(invoice: state.invoiceList[index]);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+As you can see, we pass to the SortChipsRow a function which receives an object of type InvoiceOrderState. With this object we are going to trigger the event to change the state of the bloc, then the BlocBuilder will react with the new changes and the UI will be redrawn. 
+
+### Launching an event from a widget.
 
 To launch an event from a widget, we can use the `context.read<BlocType>().add(Event())` method. To continue with the example:
 
 ```dart
-class FilterInvoicesPage extends StatelessWidget {
+class InvoiceListSection extends StatelessWidget {
+  const InvoiceListSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = context.read<InvoiceFilterBloc>(); // as long as it is descendant of a provided bloc, it is ok. 
+    return BlocBuilder<InvoiceListBloc, InvoiceListState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              SortChipsRow(
+                  state: state.invoicesOrderState,
+                  onChipSelected: (invoiceOrderState) {
+                    context
+                        .read<InvoiceListBloc>()
+                        .add(InvoiceListEvent.updatedOrder(invoiceOrderState));
+                  }),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.invoiceList.length,
+                  itemBuilder: (context, index) {
+                    return InvoiceCard(invoice: state.invoiceList[index]);
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
 
-    return GestureDetector(
-      onTap: ()=> _bloc.add(InvoiceFilterEvent.updateInvoiceDataFilter(InvoiceDataFilter.number(FilterOrder.OrderAsc())
-      child: Text('I should have studied medicine'),
+```
+
+Full code of the project but in this simplified version can be found in [this branch](https://github.com/antOnioOnio/flutter_bloc_example/tree/feature/simplify_version).
+
+## Complicating it a bit
+
+In this example we are going to dive into how to encapsulate objects with Freezed. Let’s assume that we want to be able to change not just the invoice order, but also the direction of it, ascending or descending, also let’s add a new sort filter ⇒ Amount.  
+
+![Untitled](Flutter%20Bloc%20State%20management%20with%20Freezed%20+%20Flutt%20ef2a58381b6e48e4a3547b4fd486dd8a/Untitled%202.png)
+
+Again, there are 2.39M ways of doing the same thing, in this example the main goal is to show how we can encapsulate objects with freezed so maybe you can find your way out in a similar manner.
+
+Ok, so the first change that we need to do now is our filter object.  Before the only thing that we had was a sealed class displaying two options:
+
+```dart
+@freezed
+class InvoiceOrder with _$InvoiceOrder {
+  const factory InvoiceOrder.date() = _Date;
+  const factory InvoiceOrder.number() = _Number;
+}
+```
+
+But now this is not enough. You may think, ok why don’t just add another one and that’s it. Nop, even though I could do it later we would face some problems to keep the state of the non selected buttons ( I tried…). So, one possible solution  would be:
+
+```dart
+@freezed
+class InvoiceOrder with _$InvoiceOrder {
+  /// Creates a new instance of [InvoiceOrder] with the specified parameters.
+  const factory InvoiceOrder(
+      {required FilterOrder filterOrder,
+      required bool selected,
+      required String name}) = _InvoiceOrder;
+}
+```
+
+If you're as clever as a fox, you're probably wondering right now. Hey, what's FilterOrder? Excellent question my dear reader. Our order can be ascending or descending...then, another perfect solution would be..yep, you guessed it ! Sealed class!!
+
+```dart
+@freezed
+class FilterOrder with _$FilterOrder {
+/// Represents an ascendant order
+const factory FilterOrder.orderAsc() = _OrderAsc;
+
+/// Represents an descendant order
+const factory FilterOrder.orderDesc() = _OrderDesc;
+}
+```
+
+Ok, we have our object ready to use…. do we? And the answer is no. Is not ready yet. What we need is a list of this object. And you may say now. So…why don’t you just add a **List<InvoiceOrder>** to the bloc state? And I would say cause we are going to encapsulate it!! 
+
+```dart
+@freezed
+class InvoiceOrderState with _$InvoiceOrderState {
+
+/// Creates a new instance of [InvoiceOrderState].
+  ///
+  /// The [listInvoiceOrderState] parameter is a required list of [InvoiceOrder]
+  /// objects that represents the order of invoices in the UI.
+const factory InvoiceOrderState({
+    required List<InvoiceOrder> listInvoiceOrderState,
+  }) = _InvoiceOrderState;
+
+/// Creates a new instance of [InvoiceOrderState] with initial values.
+  ///
+  /// The initial values are:
+  /// - A list of three [InvoiceOrder] objects, one for each column in the UI.
+  /// - The first [InvoiceOrder] object is selected and sorted by date in ascending order.
+  /// - The second and third [InvoiceOrder] objects are not selected and sorted by number and amount
+  ///   in ascending order, respectively.
+factory InvoiceOrderState.initial() {
+    return const InvoiceOrderState(
+      listInvoiceOrderState: [
+        InvoiceOrder(
+          filterOrder: FilterOrder.orderAsc(),
+          selected: true,
+          name: 'Date',
+        ),
+        InvoiceOrder(
+          filterOrder: FilterOrder.orderAsc(),
+          selected: false,
+          name: 'Number',
+        ),
+        InvoiceOrder(
+          filterOrder: FilterOrder.orderAsc(),
+          selected: false,
+          name: 'Amount',
+        ),
+      ],
     );
   }
 }
 ```
+
+And finally, the updated state class:
+
+```dart
+@freezed
+class InvoiceListState with _$InvoiceListState {
+  const factory InvoiceListState(
+      {required InvoiceOrderState invoicesOrderState,
+      required List<Invoice> invoiceList,
+      required ScreenStatus screenStatus}) = _InvoiceListState;
+
+  factory InvoiceListState.initial() {
+    return InvoiceListState(
+      invoicesOrderState: InvoiceOrderState.initial(),
+      invoiceList: [],
+      screenStatus: const ScreenStatus.initial(),
+    );
+  }
+}
+
+```
+
+And that’s it. With that now we are able to draw the state of the widget, keep its state and trigger the necessary  events to change it. Of course there are more added logic to handle it, feel free to check it [in the main branch](https://github.com/antOnioOnio/flutter_bloc_example)
 
 ### Last advices
 
