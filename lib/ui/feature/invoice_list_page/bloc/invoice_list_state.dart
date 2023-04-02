@@ -1,6 +1,4 @@
 import 'package:flutter_bloc_freezed_example/repositories/model/invoice.dart';
-import 'package:flutter_bloc_freezed_example/ui/model/filter_order.dart';
-import 'package:flutter_bloc_freezed_example/ui/model/invoice_order.dart';
 import 'package:flutter_bloc_freezed_example/ui/model/invoice_order_state.dart';
 import 'package:flutter_bloc_freezed_example/ui/model/screen_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,7 +13,6 @@ class InvoiceStatus with _$InvoiceStatus {
 }
 
 extension InvoiceStatusExtension on InvoiceStatus {
-
   Color getColor() {
     return when(
         paid: () => Colors.blue,
