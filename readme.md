@@ -413,7 +413,7 @@ Full code of the project but in this simplified version can be found in [this br
 
 In this example we are going to dive into how to encapsulate objects with Freezed. Let’s assume that we want to be able to change not just the invoice order, but also the direction of it, ascending or descending, also let’s add a new sort filter ⇒ Amount.  
 
-![Untitled](Flutter%20Bloc%20State%20management%20with%20Freezed%20+%20Flutt%20ef2a58381b6e48e4a3547b4fd486dd8a/Untitled%202.png)
+![Untitled](readme/Untitled%202.png)
 
 Again, there are 2.39M ways of doing the same thing, in this example the main goal is to show how we can encapsulate objects with freezed so maybe you can find your way out in a similar manner.
 
