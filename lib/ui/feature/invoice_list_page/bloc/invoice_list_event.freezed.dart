@@ -87,8 +87,6 @@ abstract class _$$_UpdatedOrderCopyWith<$Res> {
       __$$_UpdatedOrderCopyWithImpl<$Res>;
   @useResult
   $Res call({InvoiceOrderState order});
-
-  $InvoiceOrderStateCopyWith<$Res> get order;
 }
 
 /// @nodoc
@@ -102,22 +100,14 @@ class __$$_UpdatedOrderCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? order = null,
+    Object? order = freezed,
   }) {
     return _then(_$_UpdatedOrder(
-      null == order
+      freezed == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as InvoiceOrderState,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $InvoiceOrderStateCopyWith<$Res> get order {
-    return $InvoiceOrderStateCopyWith<$Res>(_value.order, (value) {
-      return _then(_value.copyWith(order: value));
-    });
   }
 }
 
@@ -139,11 +129,12 @@ class _$_UpdatedOrder implements _UpdatedOrder {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UpdatedOrder &&
-            (identical(other.order, order) || other.order == order));
+            const DeepCollectionEquality().equals(other.order, order));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, order);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(order));
 
   @JsonKey(ignore: true)
   @override

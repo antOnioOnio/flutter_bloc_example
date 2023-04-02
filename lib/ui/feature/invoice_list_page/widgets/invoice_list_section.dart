@@ -4,7 +4,7 @@ import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/bloc/i
 import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/bloc/invoice_list_event.dart';
 import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/bloc/invoice_list_state.dart';
 import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/widgets/invoice_card.dart';
-import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/widgets/order_button.dart';
+import 'package:flutter_bloc_freezed_example/ui/feature/invoice_list_page/widgets/sort_chips_row.dart';
 
 class InvoiceListSection extends StatelessWidget {
   const InvoiceListSection({Key? key}) : super(key: key);

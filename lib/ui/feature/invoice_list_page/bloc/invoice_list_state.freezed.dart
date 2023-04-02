@@ -37,7 +37,6 @@ abstract class $InvoiceListStateCopyWith<$Res> {
       List<Invoice> invoiceList,
       ScreenStatus screenStatus});
 
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState;
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
 
@@ -54,12 +53,12 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? invoicesOrderState = null,
+    Object? invoicesOrderState = freezed,
     Object? invoiceList = null,
     Object? screenStatus = null,
   }) {
     return _then(_value.copyWith(
-      invoicesOrderState: null == invoicesOrderState
+      invoicesOrderState: freezed == invoicesOrderState
           ? _value.invoicesOrderState
           : invoicesOrderState // ignore: cast_nullable_to_non_nullable
               as InvoiceOrderState,
@@ -72,14 +71,6 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
           : screenStatus // ignore: cast_nullable_to_non_nullable
               as ScreenStatus,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState {
-    return $InvoiceOrderStateCopyWith<$Res>(_value.invoicesOrderState, (value) {
-      return _then(_value.copyWith(invoicesOrderState: value) as $Val);
-    });
   }
 
   @override
@@ -105,8 +96,6 @@ abstract class _$$_InvoiceListStateCopyWith<$Res>
       ScreenStatus screenStatus});
 
   @override
-  $InvoiceOrderStateCopyWith<$Res> get invoicesOrderState;
-  @override
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
 
@@ -121,12 +110,12 @@ class __$$_InvoiceListStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? invoicesOrderState = null,
+    Object? invoicesOrderState = freezed,
     Object? invoiceList = null,
     Object? screenStatus = null,
   }) {
     return _then(_$_InvoiceListState(
-      invoicesOrderState: null == invoicesOrderState
+      invoicesOrderState: freezed == invoicesOrderState
           ? _value.invoicesOrderState
           : invoicesOrderState // ignore: cast_nullable_to_non_nullable
               as InvoiceOrderState,
@@ -174,8 +163,8 @@ class _$_InvoiceListState implements _InvoiceListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InvoiceListState &&
-            (identical(other.invoicesOrderState, invoicesOrderState) ||
-                other.invoicesOrderState == invoicesOrderState) &&
+            const DeepCollectionEquality()
+                .equals(other.invoicesOrderState, invoicesOrderState) &&
             const DeepCollectionEquality()
                 .equals(other._invoiceList, _invoiceList) &&
             (identical(other.screenStatus, screenStatus) ||
@@ -183,8 +172,11 @@ class _$_InvoiceListState implements _InvoiceListState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, invoicesOrderState,
-      const DeepCollectionEquality().hash(_invoiceList), screenStatus);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(invoicesOrderState),
+      const DeepCollectionEquality().hash(_invoiceList),
+      screenStatus);
 
   @JsonKey(ignore: true)
   @override
