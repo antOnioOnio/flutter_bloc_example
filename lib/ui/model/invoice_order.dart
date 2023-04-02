@@ -10,6 +10,5 @@ class InvoiceOrder with _$InvoiceOrder {
 }
 
 extension InvoiceOrderExtension on InvoiceOrder{
-
   bool isDate() => when(date: ()=> true, number: ()=> false);
 }

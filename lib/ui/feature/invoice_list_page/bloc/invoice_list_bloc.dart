@@ -18,7 +18,9 @@ class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
         await event.when(
             updatedOrder: (invoiceOrderState) async =>
                 await _onUpdatedOrder(event, emit, invoiceOrderState),
-            resetFilters: () {},
+            resetFilters: () {
+              emit(InvoiceListState.initial());
+            },
             getInvoicesClicked: () async => await _onLoadInvoices(event, emit));
       },
     );
@@ -53,8 +55,7 @@ class InvoiceListBloc extends Bloc<InvoiceListEvent, InvoiceListState> {
           invoicesOrderState: invoiceOrderState),
     );
 
-    final invoiceList =
-        await _repository.getSortedInvoices(invoiceOrderState);
+    final invoiceList = await _repository.getSortedInvoices(invoiceOrderState);
 
     emit(
       state.copyWith(

@@ -16,7 +16,7 @@ class InvoiceListState with _$InvoiceListState {
     return const InvoiceListState(
       invoicesOrderState: InvoiceOrder.date(),
       invoiceList: [],
-      screenStatus: const ScreenStatus.initial(),
+      screenStatus: ScreenStatus.initial(),
     );
   }
 }

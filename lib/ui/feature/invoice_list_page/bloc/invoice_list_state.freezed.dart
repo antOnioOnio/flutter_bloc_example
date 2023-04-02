@@ -17,9 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$InvoiceListState {
   InvoiceOrder get invoicesOrderState => throw _privateConstructorUsedError;
-
   List<Invoice> get invoiceList => throw _privateConstructorUsedError;
-
   ScreenStatus get screenStatus => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +30,6 @@ abstract class $InvoiceListStateCopyWith<$Res> {
   factory $InvoiceListStateCopyWith(
           InvoiceListState value, $Res Function(InvoiceListState) then) =
       _$InvoiceListStateCopyWithImpl<$Res, InvoiceListState>;
-
   @useResult
   $Res call(
       {InvoiceOrder invoicesOrderState,
@@ -40,7 +37,6 @@ abstract class $InvoiceListStateCopyWith<$Res> {
       ScreenStatus screenStatus});
 
   $InvoiceOrderCopyWith<$Res> get invoicesOrderState;
-
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
 
@@ -51,7 +47,6 @@ class _$InvoiceListStateCopyWithImpl<$Res, $Val extends InvoiceListState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -101,7 +96,6 @@ abstract class _$$_InvoiceListStateCopyWith<$Res>
   factory _$$_InvoiceListStateCopyWith(
           _$_InvoiceListState value, $Res Function(_$_InvoiceListState) then) =
       __$$_InvoiceListStateCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -111,7 +105,6 @@ abstract class _$$_InvoiceListStateCopyWith<$Res>
 
   @override
   $InvoiceOrderCopyWith<$Res> get invoicesOrderState;
-
   @override
   $ScreenStatusCopyWith<$Res> get screenStatus;
 }
@@ -160,7 +153,6 @@ class _$_InvoiceListState implements _InvoiceListState {
   @override
   final InvoiceOrder invoicesOrderState;
   final List<Invoice> _invoiceList;
-
   @override
   List<Invoice> get invoiceList {
     if (_invoiceList is EqualUnmodifiableListView) return _invoiceList;
@@ -208,13 +200,10 @@ abstract class _InvoiceListState implements InvoiceListState {
 
   @override
   InvoiceOrder get invoicesOrderState;
-
   @override
   List<Invoice> get invoiceList;
-
   @override
   ScreenStatus get screenStatus;
-
   @override
   @JsonKey(ignore: true)
   _$$_InvoiceListStateCopyWith<_$_InvoiceListState> get copyWith =>
